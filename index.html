@@ -1,4 +1,4 @@
-<html lang="en" >
+<html lang="en" ng-app="smartMeter" >
 <head>
 	
 	<meta charset="utf-8">
@@ -9,14 +9,79 @@
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 </head>
-<body ng-app="smartMeter" ng-cloak>
-  <div class="inset" ng-controller="MainCtrl" ng-cloak>
-		<md-switch ng-model="status" aria-label="Status Switch">
-    	State 2(Excess energy)
-  	</md-switch>
-    
-	</div>
+<body ng-controller="MainCtrl" ng-cloak>
+	<md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Smart Meter - ElectroWizard</h2>
+    </div>
+  </md-toolbar>
   
+	<div ng-cloak="">
+		
+	  <md-content class="md-padding" layout-xs="column" layout="row">
+	    <div flex-xs="" flex-gt-xs="50" layout="column">
+	      <md-card md-theme=" {{ 'dark-purple' }} ">
+	      	<md-card-title>
+	          <md-card-title-text>
+	            <span class="md-headline">Excess Energy Consumption State</span>
+	          </md-card-title-text>
+	        </md-card-title>
+	        <div class="inset" ng-cloak>
+					  <md-switch ng-model="status" aria-label="Switch 1">
+					    {{ status? 'True': 'False'}}
+					  </md-switch>
+					</div>
+	      </md-card>
+	      <md-card md-theme="{{ 'dark-orange' }}" md-theme-watch>
+	        <md-card-title>
+	          <md-card-title-text>
+	            <span class="md-headline">Consumption</span>
+	          </md-card-title-text>
+	          
+	        </md-card-title>
+	        <md-card-content>
+	        	
+	        	<md-list flex>
+		        <md-list-item class="md-1-line" ng-click="null">
+		        	<div class="md-list-item-text" layout="column">
+			          <h3>Excess Energy</h3>
+			        
+			        </div>
+			       </md-list-item>
+			       <md-list-item class="md-1-line" ng-click="null">
+		        	<div class="md-list-item-text" layout="column">
+			          <h3>Normal Energy</h3>
+			        
+			        </div>
+			       </md-list-item>
+	        	</md-list>
+	        </md-card-content>
+
+      	</md-card>
+	      
+	    </div>
+	    <div>
+	    	<div flex-xs="" flex-gt-xs="50" layout="column">
+	    		<md-card md-theme="{{  'dark-blue'  }}" md-theme-watch="">
+	        <md-card-title>
+	          <md-card-title-text>
+	            <span class="md-headline">Graph</span>
+	            
+	          </md-card-title-text>
+	        </md-card-title>
+	        <md-card-content layout="row" layout-align="space-between">
+	          <div class="md-media-xl card-media"></div>
+
+	          
+	        </md-card-content>
+	      </md-card>
+	    	</div>
+	    </div>
+	    
+	  </md-content>
+	</div>
+
+
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -29,9 +94,15 @@
   <!-- Your application bootstrap  -->
   <script>
   var smartMeter = angular.module('smartMeter', ['ngMaterial']);
-	smartMeter.controller('MainCtrl', function MainCtrl($scope){
+	smartMeter
+	.controller('MainCtrl', function MainCtrl($scope){
 		$scope.status=true;
-	});
+	})
+	.config(function($mdThemingProvider){
+		$mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+		$mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+		$mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+	})
   </script>
 	  		
   
