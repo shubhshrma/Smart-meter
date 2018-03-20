@@ -50,57 +50,42 @@
 	        			<h3>Excess Energy</h3>
 	        		</md-grid-tile>
 	        		<md-grid-tile>
-	        			<h3 class="red">123</h3>
+	        			<h3 class="red">{{genUnits | number:2}}</h3>
 	        		</md-grid-tile>
 	        		<md-grid-tile>
 	        			<h3>Normal Energy</h3>
 	        		</md-grid-tile>
 	        		<md-grid-tile>
-	        			<h3 class="red">123</h3>
+	        			<h3 class="red">{{ conUnits | number:2 }}</h3>
 	        		</md-grid-tile>
 	        	</md-grid-list>
 	        	
 	        </md-card-content>
 
       	</md-card>
-      	<md-card md-theme=" {{  }} ">
+      	
+	      
+	    </div>
+	    
+	    	<div flex-xs="row" flex-gt-xs="50" layout="column">
+	    	<md-card md-theme=" {{  }} ">
 	      	<md-card-title>
 	          <md-card-title-text>
 	            <span class="md-headline">Rate of Consumption of Energy</span>
 	          </md-card-title-text>
 	        </md-card-title>
 	        <md-card-content>
-	        	<canvas id="myChart"></canvas>
+	        	<canvas id="consumptionChart"></canvas>
 					</md-card-content>
 	      </md-card>
-	      
-	    </div>
-	    
-	    	<div flex-xs="row" flex-gt-xs="50" layout="column">
-	    		<md-card md-theme="{{  'dark-blue'  }}" md-theme-watch="">
-	        <md-card-title>
-	          <md-card-title-text>
-	            <span class="md-headline">Graph</span>
-	            
-	          </md-card-title-text>
-	        </md-card-title>
-	        <md-card-content>
-	        	
-					</md-card-content>
-	        <md-card-content layout="row" layout-align="space-between">
-	          <div class="md-media-xl card-media"></div>
-
-	          	
-	        </md-card-content>
-	      </md-card>
-	      <md-card md-theme=" {{ 'amber' }} ">
+	      <md-card md-theme=" {{  }} ">
 	      	<md-card-title>
 	          <md-card-title-text>
 	            <span class="md-headline">Rate of Generation of Excess Energy</span>
 	          </md-card-title-text>
 	        </md-card-title>
 	        <md-card-content>
-	        	<h3 class='red'>1.0</h3>
+	        	<canvas id="generationChart"></canvas>
 					</md-card-content>
 	      </md-card>
 	    	</div>
@@ -121,89 +106,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
   
   <!-- Your application bootstrap  -->
-  <script>
-  var smartMeter = angular.module('smartMeter', ['ngMaterial']);
-	smartMeter
-	.controller('MainCtrl', function MainCtrl($scope){
-		$scope.status=true;
-	})
-	.config(function($mdThemingProvider){
-		$mdThemingProvider.theme('amber').backgroundPalette('purple');
-		$mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-		$mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-		$mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-	})
-
-	var consumption_units = [];
-	var generation_units = [];
-	function f_consumption(){
-		var roc= Math.floor((Math.random()*10)+1);
-		localStorage.consumption= (parseFloat(localStorage.consumption)+ roc*0.01);
-		return 0.01*roc;
-	}
-
-	function f_generation(){
-		var rog= Math.floor((Math.random()*10)+1);
-		localStorage.energy= (parseFloat(localStorage.energy)+ rog*0.005);
-		return 0.005*rog;
-	}
-	let massPopChart;
-	let label_array=[];
-	for(var i=0;i<=100;i++){
-		label_array[i]=i;
-	} 
-	var ctx = document.getElementById("myChart");
-	    massPopChart = new Chart(myChart, {
-      type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-      data: {
-        labels: label_array,
-        datasets: [{
-        	  fill: false,
-            label: '	Units in KWh',
-            data: consumption_units,
-            borderWidth: 1,
-            borderColor: 'red'	
-        }]
-    	},
-
-    	options: {
-    		animation: {
-    			duration: 0
-    		},
-    		scales: {
-    			yAxes: [{
-    				ticks: {
-    					beginAtZero: true,
-    					stepSize: 0.01,
-    					min: 0,
-    					max: 0.2
-    				}
-    			}]
-    		}
-    	}
-      
-  });
-	var j = function(){
-	//console.log(parseFloat(localStorage.consumption).toFixed(2)+"-"+parseFloat(localStorage.energy).toFixed(2));
-	var consumption_rate = f_consumption();
-	var generation_rate = f_generation();
-	/*var new_consumption_units=[];
-	new_consumption_units.push(consumption_rate);
-	for(var i=0;i<consumption_units.length;i++){
-		new_consumption_units.push(consumption_units[i]);
-	}*/
-	consumption_units.push(consumption_rate);
-	/*if(new_consumption_units.length>100){
-		new_consumption_units.pop();
-	}
-	consumption_units=new_consumption_units;*/
-	massPopChart.update();
-  
-	}
-	
-	setInterval(j, 3000);
-
-  </script>
+  <script src="app/MainCtrl.controller.js"></script>
 	  		
   
 </body>
